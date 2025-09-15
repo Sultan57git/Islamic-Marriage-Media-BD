@@ -221,6 +221,291 @@ const IslamicMarriageMedia = () => {
         <div className="bg-gray-50 rounded-xl p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">আমি খুঁজছি</label>
+              <select 
+                value={searchFilters.gender}
+                onChange={(e) => setSearchFilters({...searchFilters, gender: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">নির্বাচন করুন</option>
+                <option value="পাত্র">পাত্র</option>
+                <option value="পাত্রী">পাত্রী</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">বয়স (থেকে)</label>
+              <select 
+                value={searchFilters.ageFrom}
+                onChange={(e) => setSearchFilters({...searchFilters, ageFrom: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">নির্বাচন করুন</option>
+                {Array.from({length: 30}, (_, i) => 18 + i).map(age => (
+                  <option key={age} value={age}>{age} বছর</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">বয়স (পর্যন্ত)</label>
+              <select 
+                value={searchFilters.ageTo}
+                onChange={(e) => setSearchFilters({...searchFilters, ageTo: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">নির্বাচন করুন</option>
+                {Array.from({length: 30}, (_, i) => 18 + i).map(age => (
+                  <option key={age} value={age}>{age} বছর</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">বর্তমান ঠিকানা</label>
+              <select 
+                value={searchFilters.location}
+                onChange={(e) => setSearchFilters({...searchFilters, location: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">নির্বাচন করুন</option>
+                <option value="ঢাকা">ঢাকা</option>
+                <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+                <option value="সিলেট">সিলেট</option>
+                <option value="খুলনা">খুলনা</option>
+                <option value="রাজশাহী">রাজশাহী</option>
+                <option value="বরিশাল">বরিশাল</option>
+                <option value="রংপুর">রংপুর</option>
+                <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">শিক্ষাগত যোগ্যতা</label>
+              <select 
+                value={searchFilters.education}
+                onChange={(e) => setSearchFilters({...searchFilters, education: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">নির্বাচন করুন</option>
+                <option value="এসএসসি">এসএসসি</option>
+                <option value="এইচএসসি">এইচএসসি</option>
+                <option value="স্নাতক">স্নাতক</option>
+                <option value="স্নাতকোত্তর">স্নাতকোত্তর</option>
+                <option value="পিএইচডি">পিএইচডি</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">পেশা</label>
+              <select 
+                value={searchFilters.profession}
+                onChange={(e) => setSearchFilters({...searchFilters, profession: e.target.value})}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">নির্বাচন করুন</option>
+                <option value="ডাক্তার">ডাক্তার</option>
+                <option value="ইঞ্জিনিয়ার">ইঞ্জিনিয়ার</option>
+                <option value="শিক্ষক">শিক্ষক</option>
+                <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+                <option value="সরকারি চাকরি">সরকারি চাকরি</option>
+                <option value="বেসরকারি চাকরি">বেসরকারি চাকরি</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <button className="bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-emerald-700 transition-colors inline-flex items-center">
+              <Search className="mr-2" />
+              খুঁজুন ({sampleBiodata.length} টি ফলাফল)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const ProfileCard = ({ profile }) => (
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100">
+      <div className="flex items-center justify-between mb-4">
+        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+          profile.gender === 'পাত্র' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800'
+        }`}>
+          {profile.gender}
+        </span>
+        <span className="text-gray-500 text-sm">ID: {profile.id}</span>
+      </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center">
+          <Calendar className="h-4 w-4 text-gray-400 mr-2" />
+          <span className="text-sm">{profile.age} বছর</span>
+        </div>
+        
+        <div className="flex items-center">
+          <MapPin className="h-4 w-4 text-gray-400 mr-2" />
+          <span className="text-sm">{profile.location}</span>
+        </div>
+
+        <div className="flex items-center">
+          <Award className="h-4 w-4 text-gray-400 mr-2" />
+          <span className="text-sm">{profile.education}</span>
+        </div>
+
+        <div className="flex items-center">
+          <Users className="h-4 w-4 text-gray-400 mr-2" />
+          <span className="text-sm">{profile.profession}</span>
+        </div>
+
+        <div className="bg-emerald-50 p-3 rounded-lg">
+          <div className="text-sm text-emerald-800">
+            <strong>দ্বীনি শিক্ষা:</strong> {profile.religiousEducation}
+          </div>
+          <div className="text-sm text-emerald-800 mt-1">
+            <strong>মাযহাব:</strong> {profile.madhab}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 flex gap-3">
+        <button className="flex-1 bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center">
+          <Heart className="h-4 w-4 mr-2" />
+          আগ্রহ প্রকাশ
+        </button>
+        <button className="flex-1 border border-emerald-600 text-emerald-600 py-2 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center justify-center">
+          <Eye className="h-4 w-4 mr-2" />
+          বিস্তারিত
+        </button>
+      </div>
+    </div>
+  );
+
+  const PricingSection = () => (
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-4">প্রিমিয়াম সেবা</h2>
+        <p className="text-gray-600 text-center mb-12">আরও ভাল সেবা পেতে প্রিমিয়াম প্ল্যান নিন</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h3 className="text-xl font-bold mb-4">বেসিক</h3>
+            <div className="text-3xl font-bold text-emerald-600 mb-4">বিনামূল্যে</div>
+            <ul className="space-y-3 mb-8">
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />প্রোফাইল তৈরি</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />৫টি প্রোফাইল দেখুন</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />বেসিক সার্চ</li>
+            </ul>
+            <button className="w-full bg-gray-200 text-gray-800 py-3 rounded-lg">বর্তমান প্ল্যান</button>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-emerald-500 relative">
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-sm">
+              জনপ্রিয়
+            </div>
+            <h3 className="text-xl font-bold mb-4">স্ট্যান্ডার্ড</h3>
+            <div className="text-3xl font-bold text-emerald-600 mb-4">৯৯৯ টাকা<span className="text-sm font-normal">/মাস</span></div>
+            <ul className="space-y-3 mb-8">
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />সবকিছু বেসিক এর</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />অসীমিত প্রোফাইল দেখুন</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />এডভান্স সার্চ</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />যোগাযোগের তথ্য</li>
+            </ul>
+            <button className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors">
+              এখনই শুরু করুন
+            </button>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h3 className="text-xl font-bold mb-4">প্রিমিয়াম</h3>
+            <div className="text-3xl font-bold text-emerald-600 mb-4">১৯৯৯ টাকা<span className="text-sm font-normal">/মাস</span></div>
+            <ul className="space-y-3 mb-8">
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />সবকিছু স্ট্যান্ডার্ড এর</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />প্রায়োরিটি সাপোর্ট</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />প্রোফাইল হাইলাইট</li>
+              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />ম্যাচমেকিং সেবা</li>
+            </ul>
+            <button className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors">
+              এখনই শুরু করুন
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const LoginForm = () => (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <Logo />
+          <h2 className="mt-6 text-3xl font-bold text-gray-900">আপনার অ্যাকাউন্টে লগইন করুন</h2>
+        </div>
+        <form className="mt-8 space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">ইমেইল/মোবাইল</label>
+            <input
+              type="text"
+              className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              placeholder="আপনার ইমেইল বা মোবাইল নাম্বার"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">পাসওয়ার্ড</label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-3 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                placeholder="আপনার পাসওয়ার্ড"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input type="checkbox" className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded" />
+              <label className="ml-2 block text-sm text-gray-900">আমাকে মনে রাখুন</label>
+            </div>
+            <button type="button" className="text-sm text-emerald-600 hover:text-emerald-500">
+              পাসওয়ার্ড ভুলে গেছেন?
+            </button>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-emerald-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-emerald-700 transition-colors"
+          >
+            লগইন করুন
+          </button>
+          <div className="text-center">
+            <span className="text-sm text-gray-600">নতুন সদস্য? </span>
+            <button 
+              onClick={() => setCurrentTab('register')}
+              className="text-sm text-emerald-600 hover:text-emerald-500 font-medium"
+            >
+              এখানে নিবন্ধন করুন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+
+  const RegisterForm = () => (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+      <div className="max-w-2xl w-full space-y-8">
+        <div className="text-center">
+          <Logo />
+          <h2 className="mt-6 text-3xl font-bold text-gray-900">নতুন অ্যাকাউন্ট তৈরি করুন</h2>
+          <p className="mt-2 text-sm text-gray-600">বিনামূল্যে আপনার বায়োডাটা তৈরি করুন</p>
+        </div>
+        <form className="mt-8 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">আপনি কে? *</label>
               <select className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                 <option value="">নির্বাচন করুন</option>
@@ -673,289 +958,4 @@ const IslamicMarriageMedia = () => {
   );
 };
 
-export default IslamicMarriageMedia;-medium text-gray-700 mb-2">আমি খুঁজছি</label>
-              <select 
-                value={searchFilters.gender}
-                onChange={(e) => setSearchFilters({...searchFilters, gender: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="">নির্বাচন করুন</option>
-                <option value="পাত্র">পাত্র</option>
-                <option value="পাত্রী">পাত্রী</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">বয়স (থেকে)</label>
-              <select 
-                value={searchFilters.ageFrom}
-                onChange={(e) => setSearchFilters({...searchFilters, ageFrom: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="">নির্বাচন করুন</option>
-                {Array.from({length: 30}, (_, i) => 18 + i).map(age => (
-                  <option key={age} value={age}>{age} বছর</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">বয়স (পর্যন্ত)</label>
-              <select 
-                value={searchFilters.ageTo}
-                onChange={(e) => setSearchFilters({...searchFilters, ageTo: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="">নির্বাচন করুন</option>
-                {Array.from({length: 30}, (_, i) => 18 + i).map(age => (
-                  <option key={age} value={age}>{age} বছর</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">বর্তমান ঠিকানা</label>
-              <select 
-                value={searchFilters.location}
-                onChange={(e) => setSearchFilters({...searchFilters, location: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="">নির্বাচন করুন</option>
-                <option value="ঢাকা">ঢাকা</option>
-                <option value="চট্টগ্রাম">চট্টগ্রাম</option>
-                <option value="সিলেট">সিলেট</option>
-                <option value="খুলনা">খুলনা</option>
-                <option value="রাজশাহী">রাজশাহী</option>
-                <option value="বরিশাল">বরিশাল</option>
-                <option value="রংপুর">রংপুর</option>
-                <option value="ময়মনসিংহ">ময়মনসিংহ</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">শিক্ষাগত যোগ্যতা</label>
-              <select 
-                value={searchFilters.education}
-                onChange={(e) => setSearchFilters({...searchFilters, education: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="">নির্বাচন করুন</option>
-                <option value="এসএসসি">এসএসসি</option>
-                <option value="এইচএসসি">এইচএসসি</option>
-                <option value="স্নাতক">স্নাতক</option>
-                <option value="স্নাতকোত্তর">স্নাতকোত্তর</option>
-                <option value="পিএইচডি">পিএইচডি</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">পেশা</label>
-              <select 
-                value={searchFilters.profession}
-                onChange={(e) => setSearchFilters({...searchFilters, profession: e.target.value})}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="">নির্বাচন করুন</option>
-                <option value="ডাক্তার">ডাক্তার</option>
-                <option value="ইঞ্জিনিয়ার">ইঞ্জিনিয়ার</option>
-                <option value="শিক্ষক">শিক্ষক</option>
-                <option value="ব্যবসায়ী">ব্যবসায়ী</option>
-                <option value="সরকারি চাকরি">সরকারি চাকরি</option>
-                <option value="বেসরকারি চাকরি">বেসরকারি চাকরি</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <button className="bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-emerald-700 transition-colors inline-flex items-center">
-              <Search className="mr-2" />
-              খুঁজুন ({sampleBiodata.length} টি ফলাফল)
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-
-  const ProfileCard = ({ profile }) => (
-    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100">
-      <div className="flex items-center justify-between mb-4">
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-          profile.gender === 'পাত্র' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800'
-        }`}>
-          {profile.gender}
-        </span>
-        <span className="text-gray-500 text-sm">ID: {profile.id}</span>
-      </div>
-
-      <div className="space-y-3">
-        <div className="flex items-center">
-          <Calendar className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-sm">{profile.age} বছর</span>
-        </div>
-        
-        <div className="flex items-center">
-          <MapPin className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-sm">{profile.location}</span>
-        </div>
-
-        <div className="flex items-center">
-          <Award className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-sm">{profile.education}</span>
-        </div>
-
-        <div className="flex items-center">
-          <Users className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-sm">{profile.profession}</span>
-        </div>
-
-        <div className="bg-emerald-50 p-3 rounded-lg">
-          <div className="text-sm text-emerald-800">
-            <strong>দ্বীনি শিক্ষা:</strong> {profile.religiousEducation}
-          </div>
-          <div className="text-sm text-emerald-800 mt-1">
-            <strong>মাযহাব:</strong> {profile.madhab}
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 flex gap-3">
-        <button className="flex-1 bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center">
-          <Heart className="h-4 w-4 mr-2" />
-          আগ্রহ প্রকাশ
-        </button>
-        <button className="flex-1 border border-emerald-600 text-emerald-600 py-2 px-4 rounded-lg hover:bg-emerald-50 transition-colors flex items-center justify-center">
-          <Eye className="h-4 w-4 mr-2" />
-          বিস্তারিত
-        </button>
-      </div>
-    </div>
-  );
-
-  const PricingSection = () => (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-4">প্রিমিয়াম সেবা</h2>
-        <p className="text-gray-600 text-center mb-12">আরও ভাল সেবা পেতে প্রিমিয়াম প্ল্যান নিন</p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <h3 className="text-xl font-bold mb-4">বেসিক</h3>
-            <div className="text-3xl font-bold text-emerald-600 mb-4">বিনামূল্যে</div>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />প্রোফাইল তৈরি</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />৫টি প্রোফাইল দেখুন</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />বেসিক সার্চ</li>
-            </ul>
-            <button className="w-full bg-gray-200 text-gray-800 py-3 rounded-lg">বর্তমান প্ল্যান</button>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-emerald-500 relative">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-sm">
-              জনপ্রিয়
-            </div>
-            <h3 className="text-xl font-bold mb-4">স্ট্যান্ডার্ড</h3>
-            <div className="text-3xl font-bold text-emerald-600 mb-4">৯৯৯ টাকা<span className="text-sm font-normal">/মাস</span></div>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />সবকিছু বেসিক এর</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />অসীমিত প্রোফাইল দেখুন</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />এডভান্স সার্চ</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />যোগাযোগের তথ্য</li>
-            </ul>
-            <button className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors">
-              এখনই শুরু করুন
-            </button>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <h3 className="text-xl font-bold mb-4">প্রিমিয়াম</h3>
-            <div className="text-3xl font-bold text-emerald-600 mb-4">১৯৯৯ টাকা<span className="text-sm font-normal">/মাস</span></div>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />সবকিছু স্ট্যান্ডার্ড এর</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />প্রায়োরিটি সাপোর্ট</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />প্রোফাইল হাইলাইট</li>
-              <li className="flex items-center"><CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />ম্যাচমেকিং সেবা</li>
-            </ul>
-            <button className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors">
-              এখনই শুরু করুন
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-
-  const LoginForm = () => (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <Logo />
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">আপনার অ্যাকাউন্টে লগইন করুন</h2>
-        </div>
-        <form className="mt-8 space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">ইমেইল/মোবাইল</label>
-            <input
-              type="text"
-              className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              placeholder="আপনার ইমেইল বা মোবাইল নাম্বার"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">পাসওয়ার্ড</label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                className="w-full px-3 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="আপনার পাসওয়ার্ড"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
-              >
-                {showPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
-              </button>
-            </div>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input type="checkbox" className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded" />
-              <label className="ml-2 block text-sm text-gray-900">আমাকে মনে রাখুন</label>
-            </div>
-            <button type="button" className="text-sm text-emerald-600 hover:text-emerald-500">
-              পাসওয়ার্ড ভুলে গেছেন?
-            </button>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-emerald-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-emerald-700 transition-colors"
-          >
-            লগইন করুন
-          </button>
-          <div className="text-center">
-            <span className="text-sm text-gray-600">নতুন সদস্য? </span>
-            <button 
-              onClick={() => setCurrentTab('register')}
-              className="text-sm text-emerald-600 hover:text-emerald-500 font-medium"
-            >
-              এখানে নিবন্ধন করুন
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-
-  const RegisterForm = () => (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
-      <div className="max-w-2xl w-full space-y-8">
-        <div className="text-center">
-          <Logo />
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">নতুন অ্যাকাউন্ট তৈরি করুন</h2>
-          <p className="mt-2 text-sm text-gray-600">বিনামূল্যে আপনার বায়োডাটা তৈরি করুন</p>
-        </div>
-        <form className="mt-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font
+export default IslamicMarriageMedia;
